@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SkinMatch — skin analysis to shoppable routine</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo" aria-hidden="true"></span><b>SkinMatch</b><span class="tag">AI skin analysis → routine → try-on → cart</span></div>
+    <div class="meta">
+      <span id="modeBadge" class="badge">…</span>
+      <span id="units" class="units" title="YouCam API units spent by this server (cached results cost 0)">units: –</span>
+      <button id="cartBtn" class="cart-btn" aria-label="Open cart">Cart <span id="cartCount">0</span></button>
+    </div>
+  </header>
+
+  <nav class="steps" aria-label="Progress">
+    <ol>
+      <li data-step="1" class="active">1 · Selfie</li>
+      <li data-step="2">2 · Skin report</li>
+      <li data-step="3">3 · Routine &amp; try-on</li>
+      <li data-step="4">4 · Checkout</li>
+    </ol>
+  </nav>
+
+  <main>
+    <!-- STEP 1 -->
+    <section id="step1" class="panel">
+      <div class="grid2">
+        <div>
+          <h1>Your skin, matched to a routine you can try on.</h1>
+          <p class="lead">One front-facing selfie. YouCam <b>AI Skin Analysis</b> scores 8 skin concerns, SkinMatch turns the scores into a morning and evening routine, and YouCam <b>Makeup Virtual Try-On</b> shows complexion and color products on your own face before you buy.</p>
+          <ul class="tips">
+            <li>Face the camera, face fills most of the frame (over 60% of the width)</li>
+            <li>Bright, even light · no glasses · hair off the forehead</li>
+            <li>Bare skin gives the most accurate scores</li>
+          </ul>
+        </div>
+        <div>
+          <label id="drop" class="drop" tabindex="0">
+            <input id="file" type="file" accept="image/jpeg,image/png" capture="user" hidden />
+            <img id="preview" alt="" hidden />
+            <span id="dropText">Drop a selfie here or <u>choose a photo</u><br><small>JPG/PNG · short side ≥ 480 px</small></span>
+          </label>
+          <div class="row">
+            <button id="sampleBtn" class="ghost">Use sample face</button>
+            <select id="preset" aria-label="Analysis depth"></select>
+          </div>
+          <button id="analyzeBtn" class="primary" disabled>Analyze my skin</button>
+          <p id="msg1" class="msg" role="status"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section id="step2" class="panel" hidden>
+      <div class="grid2">
+        <div class="photo-wrap">
+          <div id="photoStack" class="stack"><img id="photo2" alt="Your selfie" /></div>
+          <p class="hint">Tap a concern to show its YouCam detection mask.</p>
+        </div>
+        <div>
+          <div class="score-head">
+            <div class="ring" id="ring"><span id="overall">–</span><small>skin score</small></div>
+            <div>
+              <h2>Your skin report</h2>
+              <p id="skinType" class="muted"></p>
+              <p id="priorities"></p>
+              <p id="costNote" class="cost"></p>
+            </div>
+          </div>
+          <div id="concerns" class="concerns"></div>
+          <button id="toRoutine" class="primary">See my routine →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section id="step3" class="panel" hidden>
+      <div class="grid2 wide-left">
+        <div>
+          <h2>Your routine</h2>
+          <p class="muted">Picked from the catalog by your lowest-scoring concerns and inferred skin type. Each product says why.</p>
+          <div class="routine">
+            <div><h3>☀ Morning</h3><div id="am"></div></div>
+            <div><h3>☾ Evening</h3><div id="pm"></div></div>
+          </div>
+          <button id="addRoutine" class="secondary">Add whole routine to cart</button>
+
+          <h2 class="mt">Try on complexion &amp; color</h2>
+          <p class="muted">Each try-on is one YouCam Makeup VTO task. A full look is applied in a single task.</p>
+          <div id="looks" class="looks"></div>
+          <div id="shades" class="shades"></div>
+        </div>
+        <div class="sticky">
+          <div class="compare" id="compare">
+            <img id="beforeImg" alt="Before" />
+            <div class="after" id="afterWrap"><img id="afterImg" alt="After try-on" /></div>
+            <input id="slider" type="range" min="0" max="100" value="50" aria-label="Before / after" />
+            <span class="lbl l">Before</span><span class="lbl r">After</span>
+          </div>
+          <p id="msg3" class="msg" role="status">Pick a look or a shade to try it on.</p>
+          <div id="tryOnItems" class="try-items"></div>
+          <button id="forget" class="link">Forget my photo (delete from server)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section id="step4" class="panel" hidden>
+      <h2>Order summary</h2>
+      <div id="summary"></div>
+      <p class="muted">Demo store — no payment is taken. In production this hands the cart to the retailer's checkout.</p>
+      <button id="restart" class="secondary">Start over</button>
+    </section>
+  </main>
+
+  <aside id="cart" class="drawer" aria-hidden="true">
+    <div class="drawer-head"><h2>Cart</h2><button id="closeCart" class="link" aria-label="Close cart">✕</button></div>
+    <div id="cartItems"></div>
+    <div class="drawer-foot"><div class="total">Subtotal <b id="subtotal">$0</b></div><button id="checkout" class="primary">Checkout</button></div>
+  </aside>
+  <div id="scrim" class="scrim" hidden></div>
+
+  <footer class="foot">Powered by Perfect Corp. YouCam API (AI Skin Analysis · AI Makeup Virtual Try-On). Fictional demo catalog. Not medical advice.</footer>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

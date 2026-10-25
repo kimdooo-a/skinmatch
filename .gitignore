@@ -1,0 +1,9 @@
+# secrets and local runtime data
+.env
+.env.*
+!.env.example
+.data/
+node_modules/
+*.log
+# public/samples/sample-face.jpg is a generated (fictional-person) image and IS committed:
+# the "Use sample face" button and the test build need it.

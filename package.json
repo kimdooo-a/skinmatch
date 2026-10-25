@@ -1,0 +1,14 @@
+{
+  "name": "skinmatch",
+  "version": "0.1.0",
+  "description": "Selfie -> YouCam AI Skin Analysis -> personalized routine -> YouCam Makeup Virtual Try-On -> cart.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=22.9" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server/server.js",
+    "start:mock": "node server/server.js --mock",
+    "test": "node test/smoke.mjs && node test/live-contract.mjs"
+  }
+}
